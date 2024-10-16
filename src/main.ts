@@ -3,9 +3,9 @@ import "./style.css";
 const app: HTMLDivElement = document.querySelector("#app")!;
 
 let cookedNum: number = 0;
-let cookRate: number = 1;
+const cookRate: number = 1;
 
-const gameName = "BARELY STARTING?!?!?!";
+const gameName = "Flowers!!!";
 document.title = gameName;
 
 const header = document.createElement("h1");
@@ -26,17 +26,15 @@ mybutton.addEventListener("click", () => {
   console.log(cookedNum);
 });
 
-function addRate(){
-    cookedNum = cookRate + cookedNum;
+function addRate() {
+  cookedNum = cookRate + cookedNum;
 }
 
 setInterval(addRate, 1000);
 
 function updateCounter() {
-    counter.textContent = `Cookies Baked: ${cookedNum}`;
-    requestAnimationFrame(updateCounter);
-  }
+  counter.textContent = `Cookies Baked: ${cookedNum}`;
+  requestAnimationFrame(updateCounter);
+}
 
 updateCounter();
-
-
