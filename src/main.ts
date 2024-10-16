@@ -18,9 +18,8 @@ mybutton.textContent = "🍪";
 mybutton.addEventListener("click", () => {
   cookedNum++;
   console.log(cookedNum);
-  counter.innerHTML = "Cookies baked: "+ cookedNum;
+  counter.innerHTML = "Cookies baked: " + cookedNum;
 });
 
 app.append(mybutton);
 app.append(counter);
-
