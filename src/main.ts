@@ -28,7 +28,7 @@ const upgradeOne = document.createElement("button");
 const upgradeTwo = document.createElement("button");
 const upgradeThree = document.createElement("button");
 
-mybutton.textContent = "🍪";
+mybutton.textContent = "🌸";
 
 app.append(mybutton);
 app.append(counter);
@@ -71,9 +71,9 @@ setInterval(addRate, 1000);
 
 function updateCounter() {
   counter.textContent = `Flowers Grown: ${Math.floor(cookedNum)}, Growth/s: ${cookRate}`;
-  upgradeOne.textContent = `A bee, allows for one more picked /s: ${Math.floor(upgradeOneCost)}`;
-  upgradeTwo.textContent = `Grandmother, She likes picking through the garden /s: ${Math.floor(upgradeTwoCost)}`;
-  upgradeThree.textContent = `Botonist, needs these flowers to conduct her research /s: ${Math.floor(upgradeThreeCost)}`;
+  upgradeOne.textContent = `A singular bee, pollinates and supports flower growth. /s: ${Math.floor(upgradeOneCost)}`;
+  upgradeTwo.textContent = `Grandmother, she likes helping through the garden. /s: ${Math.floor(upgradeTwoCost)}`;
+  upgradeThree.textContent = `Botonist, needs these flowers to conduct her research. /s: ${Math.floor(upgradeThreeCost)}`;
 
   if (cookedNum >= upgradeOneCost) {
     upgradeOne.disabled = false;
@@ -97,4 +97,3 @@ function updateCounter() {
 }
 
 updateCounter();
-
