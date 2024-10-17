@@ -7,7 +7,7 @@ let cookRate: number = 1;
 const upgradeCostGrowth: number = 1.15;
 
 let upgradeOneCost: number = 10;
-const upgradeOneRate: number = 1; 
+const upgradeOneRate: number = 1;
 
 let upgradeTwoCost: number = 50;
 const upgradeTwoRate: number = 5;
@@ -29,7 +29,6 @@ const upgradeTwo = document.createElement("button");
 const upgradeThree = document.createElement("button");
 
 mybutton.textContent = "🍪";
-
 
 app.append(mybutton);
 app.append(counter);
@@ -76,7 +75,6 @@ function updateCounter() {
   upgradeTwo.textContent = `Grandmother, She likes picking through the garden /s: ${Math.floor(upgradeTwoCost)}`;
   upgradeThree.textContent = `Botonist, needs these flowers to conduct her research /s: ${Math.floor(upgradeThreeCost)}`;
 
-
   if (cookedNum >= upgradeOneCost) {
     upgradeOne.disabled = false;
   } else {
@@ -99,3 +97,4 @@ function updateCounter() {
 }
 
 updateCounter();
+
