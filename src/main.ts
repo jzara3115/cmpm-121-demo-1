@@ -6,14 +6,21 @@ let cookedNum: number = 0;
 let cookRate: number = 1;
 const upgradeCostGrowth: number = 1.15;
 
-let upgradeOneCost: number = 10;
-const upgradeOneRate: number = 1;
+interface Item {
+  name: string,
+  cost: number,
+  rate: number
+};
 
-let upgradeTwoCost: number = 50;
-const upgradeTwoRate: number = 5;
+const availableItems : Item[] = [
+  {name: "A singular bee, pollinates and supports flower growth. + 1/s: ", cost: 10, rate: 1},
+  {name: "Grandmother, she likes helping through the garden. + 5/s: ", cost: 50, rate: 5},
+  {name: "Botonist, needs these flowers to conduct her research. + 10/s: ", cost: 100, rate: 10},
+  {name: "Research Lab, focused on finding the optimal flower dna for faster growth. + 50/s: ", cost: 500, rate: 50},
+  {name: "Arboretum, absolutely filled with flowers, growing its land for its sole purpose of flowers. + 100/s: ", cost: 1000, rate: 100},
+];
 
-let upgradeThreeCost: number = 100;
-const upgradeThreeRate: number = 10;
+
 
 const gameName = "Flowers!!!";
 document.title = gameName;
@@ -24,43 +31,15 @@ app.append(header);
 
 const mybutton = document.createElement("button");
 const counter = document.createElement("div");
-const upgradeOne = document.createElement("button");
-const upgradeTwo = document.createElement("button");
-const upgradeThree = document.createElement("button");
 
 mybutton.textContent = "🌸";
 
 app.append(mybutton);
 app.append(counter);
-app.append(upgradeOne);
-app.append(upgradeTwo);
-app.append(upgradeThree);
-
-upgradeOne.disabled = true;
-upgradeTwo.disabled = true;
-upgradeThree.disabled = true;
 
 mybutton.addEventListener("click", () => {
   cookedNum++;
   console.log(cookedNum);
-});
-
-upgradeOne.addEventListener("click", () => {
-  cookRate = cookRate + upgradeOneRate;
-  cookedNum = cookedNum - upgradeOneCost;
-  upgradeOneCost = upgradeOneCost * upgradeCostGrowth;
-});
-
-upgradeTwo.addEventListener("click", () => {
-  cookRate = cookRate + upgradeTwoRate;
-  cookedNum = cookedNum - upgradeTwoCost;
-  upgradeTwoCost = upgradeTwoCost * upgradeCostGrowth;
-});
-
-upgradeThree.addEventListener("click", () => {
-  cookRate = cookRate + upgradeThreeRate;
-  cookedNum = cookedNum - upgradeThreeCost;
-  upgradeThreeCost = upgradeThreeCost * upgradeCostGrowth;
 });
 
 function addRate() {
@@ -69,29 +48,37 @@ function addRate() {
 
 setInterval(addRate, 1000);
 
+for(let i:number = 0; i < availableItems.length; i++){
+  const newButton = document.createElement("button");
+  app.append(newButton);
+  newButton.textContent = availableItems[i].name + `${Math.floor(availableItems[i].cost)}`;
+
+  if (cookedNum < availableItems[i].cost){
+    newButton.disabled = true;
+  }
+
+  newButton.addEventListener("click", () => {
+    cookRate = cookRate + availableItems[i].rate;
+    cookedNum = cookedNum - availableItems[i].cost;
+    availableItems[i].cost = availableItems[i].cost * upgradeCostGrowth;
+    newButton.textContent = availableItems[i].name + `${Math.floor(availableItems[i].cost)}`;
+  });
+
+  function updateButton(){
+    if (cookedNum < availableItems[i].cost){
+      newButton.disabled = true;
+    } else {
+      newButton.disabled = false;
+    }
+
+    requestAnimationFrame(updateButton);
+  }
+
+  updateButton();
+}
+
 function updateCounter() {
   counter.textContent = `Flowers Grown: ${Math.floor(cookedNum)}, Growth/s: ${cookRate}`;
-  upgradeOne.textContent = `A singular bee, pollinates and supports flower growth. /s: ${Math.floor(upgradeOneCost)}`;
-  upgradeTwo.textContent = `Grandmother, she likes helping through the garden. /s: ${Math.floor(upgradeTwoCost)}`;
-  upgradeThree.textContent = `Botonist, needs these flowers to conduct her research. /s: ${Math.floor(upgradeThreeCost)}`;
-
-  if (cookedNum >= upgradeOneCost) {
-    upgradeOne.disabled = false;
-  } else {
-    upgradeOne.disabled = true;
-  }
-
-  if (cookedNum >= upgradeTwoCost) {
-    upgradeTwo.disabled = false;
-  } else {
-    upgradeTwo.disabled = true;
-  }
-
-  if (cookedNum >= upgradeThreeCost) {
-    upgradeThree.disabled = false;
-  } else {
-    upgradeThree.disabled = true;
-  }
 
   requestAnimationFrame(updateCounter);
 }
