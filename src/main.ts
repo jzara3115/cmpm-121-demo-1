@@ -47,15 +47,15 @@ const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
 
-const mybutton = document.createElement("button");
+const myButton = document.createElement("button");
 const counter = document.createElement("div");
 
-mybutton.textContent = "🌸";
- 
-app.append(mybutton);
+myButton.textContent = "🌸";
+
+app.append(myButton);
 app.append(counter);
 
-mybutton.addEventListener("click", () => {
+myButton.addEventListener("click", () => {
   cookedNum++;
   console.log(cookedNum);
 });
@@ -64,37 +64,40 @@ function addRate() {
   cookedNum = cookRate + cookedNum;
 }
 
-setInterval(addRate, 1000);
+const updateInterval = 1000;
+const disabled = true;
+const enabled = false;
 
-for (let i: number = 0; i < availableItems.length; i++) {
+function updateButtonState(button: HTMLButtonElement, condition: boolean) {
+  button.disabled = condition ? disabled : enabled;
+}
+
+function handleButtonClick(index: number, button: HTMLButtonElement) {
+  cookRate = cookRate + availableItems[index].rate;
+  cookedNum = cookedNum - availableItems[index].cost;
+  availableItems[index].cost = availableItems[index].cost * upgradeCostGrowth;
+  button.textContent = availableItems[index].name + `${Math.floor(availableItems[index].cost)}`;
+}
+
+function updateButton(index: number, button: HTMLButtonElement) {
+  updateButtonState(button, cookedNum < availableItems[index].cost);
+  requestAnimationFrame(() => updateButton(index, button));
+}
+
+setInterval(addRate, updateInterval);
+
+for (let i = 0; i < availableItems.length; i++) {
   const newButton = document.createElement("button");
   app.append(newButton);
-  newButton.textContent =
-    availableItems[i].name + `${Math.floor(availableItems[i].cost)}`;
+  newButton.textContent = availableItems[i].name + `${Math.floor(availableItems[i].cost)}`;
 
   if (cookedNum < availableItems[i].cost) {
     newButton.disabled = true;
   }
 
-  newButton.addEventListener("click", () => {
-    cookRate = cookRate + availableItems[i].rate;
-    cookedNum = cookedNum - availableItems[i].cost;
-    availableItems[i].cost = availableItems[i].cost * upgradeCostGrowth;
-    newButton.textContent =
-      availableItems[i].name + `${Math.floor(availableItems[i].cost)}`;
-  });
+  newButton.addEventListener("click", () => handleButtonClick(i, newButton));
 
-  function updateButton() {
-    if (cookedNum < availableItems[i].cost) {
-      newButton.disabled = true;
-    } else {
-      newButton.disabled = false;
-    }
-
-    requestAnimationFrame(updateButton);
-  }
-
-  updateButton();
+  updateButton(i, newButton);
 }
 
 function updateCounter() {
