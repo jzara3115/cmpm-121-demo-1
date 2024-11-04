@@ -76,7 +76,8 @@ function handleButtonClick(index: number, button: HTMLButtonElement) {
   cookRate = cookRate + availableItems[index].rate;
   cookedNum = cookedNum - availableItems[index].cost;
   availableItems[index].cost = availableItems[index].cost * upgradeCostGrowth;
-  button.textContent = availableItems[index].name + `${Math.floor(availableItems[index].cost)}`;
+  button.textContent =
+    availableItems[index].name + `${Math.floor(availableItems[index].cost)}`;
 }
 
 function updateButton(index: number, button: HTMLButtonElement) {
@@ -89,7 +90,8 @@ setInterval(addRate, updateInterval);
 for (let i = 0; i < availableItems.length; i++) {
   const newButton = document.createElement("button");
   app.append(newButton);
-  newButton.textContent = availableItems[i].name + `${Math.floor(availableItems[i].cost)}`;
+  newButton.textContent =
+    availableItems[i].name + `${Math.floor(availableItems[i].cost)}`;
 
   if (cookedNum < availableItems[i].cost) {
     newButton.disabled = true;
