@@ -17,7 +17,7 @@ const availableItems: Item[] = [
   {
     name: "A singular bee, pollinates and supports flower growth. + 1/s: ",
     cost: 10,
-    rate: 100,
+    rate: 1,
   },
   {
     name: "Grandmother, she likes helping through the garden. + 5/s: ",
@@ -115,16 +115,16 @@ function updateCounter() {
 
 function addFlower() {
   const flowerCount = Math.floor(cookedNum / 10);
-  const existingFlowers = document.querySelectorAll('.flower').length;
+  const existingFlowers = document.querySelectorAll(".flower").length;
   const flowerSize = 20;
   const maxWidth = window.innerWidth;
 
   if (flowerCount > existingFlowers) {
     const flower = document.createElement("div");
     flower.textContent = "🌸";
-    flower.className = 'flower';
+    flower.className = "flower";
     flower.style.position = "absolute";
-    flower.style.bottom = `${Math.floor(existingFlowers * flowerSize / maxWidth) * flowerSize}px`;
+    flower.style.bottom = `${Math.floor((existingFlowers * flowerSize) / maxWidth) * flowerSize}px`;
     flower.style.left = `${(existingFlowers * flowerSize) % maxWidth}px`;
     app.append(flower);
   }
