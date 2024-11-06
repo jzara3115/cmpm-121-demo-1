@@ -1,10 +1,11 @@
 import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
+app.style.backgroundColor = "lightblue";
 
 let cookedNum: number = 0;
-let cookRate: number = 1;
-const upgradeCostGrowth: number = 1.15;
+let cookRate: number = 0;
+const upgradeCostGrowth: number = 1.1;
 
 interface Item {
   name: string;
@@ -16,7 +17,7 @@ const availableItems: Item[] = [
   {
     name: "A singular bee, pollinates and supports flower growth. + 1/s: ",
     cost: 10,
-    rate: 1,
+    rate: 100,
   },
   {
     name: "Grandmother, she likes helping through the garden. + 5/s: ",
@@ -58,10 +59,14 @@ app.append(counter);
 myButton.addEventListener("click", () => {
   cookedNum++;
   console.log(cookedNum);
+  updateCounter();
+  addFlower();
 });
 
 function addRate() {
   cookedNum = cookRate + cookedNum;
+  updateCounter();
+  addFlower();
 }
 
 const updateInterval = 1000;
@@ -106,6 +111,23 @@ function updateCounter() {
   counter.textContent = `Flowers Grown: ${Math.floor(cookedNum)}, Growth/s: ${cookRate}`;
 
   requestAnimationFrame(updateCounter);
+}
+
+function addFlower() {
+  const flowerCount = Math.floor(cookedNum / 10);
+  const existingFlowers = document.querySelectorAll('.flower').length;
+  const flowerSize = 20;
+  const maxWidth = window.innerWidth;
+
+  if (flowerCount > existingFlowers) {
+    const flower = document.createElement("div");
+    flower.textContent = "🌸";
+    flower.className = 'flower';
+    flower.style.position = "absolute";
+    flower.style.bottom = `${Math.floor(existingFlowers * flowerSize / maxWidth) * flowerSize}px`;
+    flower.style.left = `${(existingFlowers * flowerSize) % maxWidth}px`;
+    app.append(flower);
+  }
 }
 
 updateCounter();
